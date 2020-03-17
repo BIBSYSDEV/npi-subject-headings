@@ -1,0 +1,98 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM template for NPI subject headings service
+
+Globals:
+  Function:
+    Timeout: 20
+  Api:
+    Cors:
+      AllowMethods: "'GET,OPTIONS'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      AllowOrigin: "'*'"
+
+Parameters:
+  CognitoAuthorizerArn:
+    Type: String
+    Description: Reference to Cognito UserPool for the stage
+  CustomDomain:
+    Type: String
+    Description: Custom API to connect this lambda to
+  CustomDomainBasePath:
+    Type: String
+    Description: Base path mapping in CustomDomain
+
+Resources:
+  NvaNpiSubjectHeadingApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      EndpointConfiguration: REGIONAL
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title: NVA NPI subject headings
+          version: '1.0'
+        paths:
+          /{language}:
+            get:
+              summary: Fetch headings by language
+              produces:
+                - application/json
+              security:
+                - CognitoUserPool: []
+              parameters:
+                - in: path
+                  name: language
+                  type: string
+                  format: uuid
+                  required: true
+                  description: Two-letter language code (one of en, nb, nn).
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${NvaNpiSubjectHeadingFunction.Arn}/invocations
+                responses: {}
+                httpMethod: GET
+                type: AWS_PROXY
+              responses:
+                '200':
+                  description: OK
+                  schema:
+                    type: object
+        securityDefinitions:
+          CognitoUserPool:
+            type: apiKey
+            name: Authorization
+            in: header
+            x-amazon-apigateway-authtype: cognito_user_pools
+            x-amazon-apigateway-authorizer:
+              type: cognito_user_pools
+              providerARNs:
+                - !Ref CognitoAuthorizerArn
+  NvaNpiSubjectHeadingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: no.unit.nva.npi.subjectheadings.MainHandler::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment:
+        Variables:
+          ALLOWED_ORIGIN: '*'
+          API_SCHEME: https
+          API_HOST: !Ref CustomDomain
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /{language}
+            Method: get
+            RestApiId: !Ref NvaNpiSubjectHeadingApi
+  NvaNpiSubjectHeadingBasePathMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      BasePath: !Ref CustomDomainBasePath
+      DomainName: !Ref CustomDomain
+      RestApiId: !Ref NvaNpiSubjectHeadingApi
+      Stage: !Ref NvaNpiSubjectHeadingApi.Stage

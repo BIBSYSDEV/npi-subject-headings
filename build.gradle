@@ -1,0 +1,77 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'pmd'
+}
+
+group 'no.unit.nva'
+version '1.0-SNAPSHOT'
+
+
+sourceCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+def jacksonVersion = '2.10.2'
+def problemVersion = '0.23.0'
+def junitVersion = '5.6.0'
+
+dependencies {
+    implementation group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.2.0'
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-lambda', version: '1.11.714'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jacksonVersion
+    implementation group: 'org.zalando', name: 'problem', version: problemVersion
+    implementation group: 'org.zalando', name: 'jackson-datatype-problem', version: problemVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testImplementation 'com.github.stefanbirkner:system-lambda:1949afd7fdd15786b78b63649313ff446cc4b685'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
+    testImplementation group: 'org.apache.commons', name: 'commons-text', version: '1.8'
+
+
+}
+
+pmd {
+    ruleSetConfig = rootProject.resources.text.fromFile('config/pmd/ruleset.xml')
+    ruleSets = []
+    ignoreFailures = false
+}
+
+checkstyle {
+    toolVersion = '8.30'
+    configFile = rootProject.resources.text.fromFile('config/checkstyle/checkstyle.xml').asFile()
+    showViolations = true
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet rootProject.resources.text.fromFile('config/checkstyle/checkstyle-simple.xsl')
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco")
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'no/**')
+        }))
+    }
+}
+
+test {
+    useJUnitPlatform()
+    failFast = true
+    finalizedBy jacocoTestReport
+}

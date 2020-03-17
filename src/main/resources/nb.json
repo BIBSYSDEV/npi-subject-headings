@@ -1,0 +1,370 @@
+[
+  {
+    "id": "0001",
+    "subjectArea": "Humaniora",
+    "subdomains": [
+      {
+        "id": "1003",
+        "name": "Arkeologi og konservering"
+      },
+      {
+        "id": "1004",
+        "name": "Arkitektur og design"
+      },
+      {
+        "id": "1005",
+        "name": "Asiatiske og afrikanske studier"
+      },
+      {
+        "id": "1006",
+        "name": "Dans"
+      },
+      {
+        "id": "1007",
+        "name": "Engelsk"
+      },
+      {
+        "id": "1008",
+        "name": "Filosofi og idéhistorie"
+      },
+      {
+        "id": "1009",
+        "name": "Gresk og latin"
+      },
+      {
+        "id": "1010",
+        "name": "Historie"
+      },
+      {
+        "id": "1012",
+        "name": "Kulturvitenskap"
+      },
+      {
+        "id": "1013",
+        "name": "Kunsthistorie"
+      },
+      {
+        "id": "1014",
+        "name": "Lingvistikk"
+      },
+      {
+        "id": "1015",
+        "name": "Litteraturvitenskap"
+      },
+      {
+        "id": "1016",
+        "name": "Medier og kommunikasjon"
+      },
+      {
+        "id": "1017",
+        "name": "Musikkvitenskap"
+      },
+      {
+        "id": "1018",
+        "name": "Nordisk"
+      },
+      {
+        "id": "1019",
+        "name": "Romansk"
+      },
+      {
+        "id": "1020",
+        "name": "Slavisk-baltisk"
+      },
+      {
+        "id": "1021",
+        "name": "Teatervitenskap og drama"
+      },
+      {
+        "id": "1022",
+        "name": "Teologi og religionsvitenskap"
+      },
+      {
+        "id": "1023",
+        "name": "Tverrfaglig humanistisk forskning"
+      },
+      {
+        "id": "1024",
+        "name": "Tysk og nederlandsk"
+      }
+    ]
+  },
+  {
+    "id": "0002",
+    "subjectArea": "Samfunnsvitenskap",
+    "subdomains": [
+      {
+        "id": "1025",
+        "name": "Biblioteks- og informasjonsvitenskap"
+      },
+      {
+        "id": "1026",
+        "name": "Geografi"
+      },
+      {
+        "id": "1011",
+        "name": "Kjønnsforskning"
+      },
+      {
+        "id": "1027",
+        "name": "Pedagogikk og utdanning"
+      },
+      {
+        "id": "1028",
+        "name": "Rettsvitenskap"
+      },
+      {
+        "id": "1029",
+        "name": "Samfunnsøkonomi"
+      },
+      {
+        "id": "1030",
+        "name": "Sosialantropologi"
+      },
+      {
+        "id": "1060",
+        "name": "Sosialforskning"
+      },
+      {
+        "id": "1031",
+        "name": "Sosiologi"
+      },
+      {
+        "id": "1032",
+        "name": "Statsvitenskap"
+      },
+      {
+        "id": "1034",
+        "name": "Tverrfaglig samfunnsforskning"
+      },
+      {
+        "id": "1033",
+        "name": "Utviklingsstudier"
+      },
+      {
+        "id": "1035",
+        "name": "Økonomisk-administrative fag"
+      }
+    ]
+  },
+  {
+    "id": "0003",
+    "subjectArea": "Medisin og helsefag",
+    "subdomains": [
+      {
+        "id": "1062",
+        "name": "Anestesi, intensiv, akutt"
+      },
+      {
+        "id": "1063",
+        "name": "Biomedisin"
+      },
+      {
+        "id": "1064",
+        "name": "Dermatologi og venerologi"
+      },
+      {
+        "id": "1065",
+        "name": "Endokrinologi"
+      },
+      {
+        "id": "1144",
+        "name": "Ernæring"
+      },
+      {
+        "id": "1059",
+        "name": "Farmasi, farmakologi og toksikologi"
+      },
+      {
+        "id": "1066",
+        "name": "Gastroenterologi og hepatologi"
+      },
+      {
+        "id": "1067",
+        "name": "Generell medisin"
+      },
+      {
+        "id": "1068",
+        "name": "Geriatri"
+      },
+      {
+        "id": "1069",
+        "name": "Gynekologi og obstetrikk"
+      },
+      {
+        "id": "1070",
+        "name": "Hematologi"
+      },
+      {
+        "id": "1071",
+        "name": "Hjerte, kar og luftveier"
+      },
+      {
+        "id": "1061",
+        "name": "Idrettsforskning"
+      },
+      {
+        "id": "1072",
+        "name": "Infeksjoner"
+      },
+      {
+        "id": "1073",
+        "name": "Kirurgiske fag"
+      },
+      {
+        "id": "1074",
+        "name": "Nefrologi"
+      },
+      {
+        "id": "1075",
+        "name": "Nevrologi"
+      },
+      {
+        "id": "1084",
+        "name": "Odontologi"
+      },
+      {
+        "id": "1076",
+        "name": "Onkologi"
+      },
+      {
+        "id": "1077",
+        "name": "Pediatri"
+      },
+      {
+        "id": "1078",
+        "name": "Psykiatri"
+      },
+      {
+        "id": "1085",
+        "name": "Psykologi"
+      },
+      {
+        "id": "1079",
+        "name": "Radiologi og billeddiagnostikk"
+      },
+      {
+        "id": "1080",
+        "name": "Revmatologi"
+      },
+      {
+        "id": "1081",
+        "name": "Samfunnsmedisin"
+      },
+      {
+        "id": "1086",
+        "name": "Sykepleie"
+      },
+      {
+        "id": "1087",
+        "name": "Veterinærmedisin"
+      },
+      {
+        "id": "1082",
+        "name": "Øre-nese-hals"
+      },
+      {
+        "id": "1083",
+        "name": "Øyesykdommer"
+      }
+    ]
+  },
+  {
+    "id": "0004",
+    "subjectArea": "Realfag og teknologi",
+    "subdomains": [
+      {
+        "id": "1042",
+        "name": "Anvendt geologi og petroleumsfag"
+      },
+      {
+        "id": "1036",
+        "name": "Biologi"
+      },
+      {
+        "id": "1043",
+        "name": "Bioteknologi"
+      },
+      {
+        "id": "1044",
+        "name": "Bygg og konstruksjonsteknikk"
+      },
+      {
+        "id": "1045",
+        "name": "Datateknikk og datavitenskap"
+      },
+      {
+        "id": "1046",
+        "name": "Elektronikk og kybernetikk"
+      },
+      {
+        "id": "1047",
+        "name": "Elkraft og elektrotekniske fag"
+      },
+      {
+        "id": "1048",
+        "name": "Energi"
+      },
+      {
+        "id": "1037",
+        "name": "Fysikk"
+      },
+      {
+        "id": "1056",
+        "name": "Generell teknologi"
+      },
+      {
+        "id": "1038",
+        "name": "Geofag"
+      },
+      {
+        "id": "1049",
+        "name": "Industriell økonomi"
+      },
+      {
+        "id": "1039",
+        "name": "Informatikk"
+      },
+      {
+        "id": "1040",
+        "name": "Kjemi"
+      },
+      {
+        "id": "1050",
+        "name": "Kjemisk teknologi"
+      },
+      {
+        "id": "1051",
+        "name": "Marin og maritim teknologi"
+      },
+      {
+        "id": "1052",
+        "name": "Maskinteknikk"
+      },
+      {
+        "id": "1041",
+        "name": "Matematikk"
+      },
+      {
+        "id": "1053",
+        "name": "Materialteknologi"
+      },
+      {
+        "id": "1054",
+        "name": "Miljøteknologi og industriell økologi"
+      },
+      {
+        "id": "1055",
+        "name": "Nett og nettverksfunksjonalitet"
+      },
+      {
+        "id": "1058",
+        "name": "Tverrfaglig naturvitenskap og medisin"
+      },
+      {
+        "id": "1057",
+        "name": "Tverrfaglig teknologi"
+      }
+    ]
+  }
+]
