@@ -23,22 +23,25 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
+import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.entity.ContentType.APPLICATION_JSON;
 import static org.zalando.problem.Status.BAD_REQUEST;
+import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 
 public class MainHandler implements RequestStreamHandler {
 
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
     public static final String ALLOWED_ORIGIN_ENV = "ALLOWED_ORIGIN";
     public static final String ENVIRONMENT_VARIABLE_NOT_SET = "Environment variable not set: ";
-    public static final String MISSING_IDENTIFIER_IN_PATH_PARAMETERS = "Missing language in path parameters";
+    public static final String MISSING_LANGUAGE_IN_PATH_PARAMETERS = "Missing language in path parameters";
     public static final String PATH_PARAMETERS_LANGUAGE = "/pathParameters/language";
     public static final String ENGLISH = "en";
     public static final String NORWEGIAN_BOKMAAL = "nb";
     public static final String NORWEGIAN_NYNORSK = "nn";
+    public static final List<String> ALLOWED_LANGUAGES = List.of(ENGLISH, NORWEGIAN_BOKMAAL, NORWEGIAN_NYNORSK);
     public static final String UNRECOGNIZED_LANGUAGE_TEMPLATE =
-            "The language value %s was not recognized (Allowed: en, nb, nn)";
+            "The language value %s was not recognized (Allowed: " + String.join(", ", ALLOWED_LANGUAGES) + ")";
     public static final String FILENAME_TEMPLATE = "%s.json";
     private static final String APPLICATION_PROBLEM_JSON = "application/problem+json";
 
@@ -83,8 +86,8 @@ public class MainHandler implements RequestStreamHandler {
         try {
             JsonNode event = objectMapper.readTree(input);
             language = Optional.ofNullable(event.at(PATH_PARAMETERS_LANGUAGE).textValue())
-                    .orElseThrow(() -> new IllegalArgumentException(MISSING_IDENTIFIER_IN_PATH_PARAMETERS));
-            if (!List.of(ENGLISH, NORWEGIAN_BOKMAAL, NORWEGIAN_NYNORSK).contains(language)) {
+                    .orElseThrow(() -> new IllegalArgumentException(MISSING_LANGUAGE_IN_PATH_PARAMETERS));
+            if (!ALLOWED_LANGUAGES.contains(language)) {
                 throw new IllegalArgumentException(String.format(UNRECOGNIZED_LANGUAGE_TEMPLATE, language));
             }
         } catch (IOException | IllegalArgumentException e) {
@@ -95,11 +98,20 @@ public class MainHandler implements RequestStreamHandler {
         }
 
         log("Request for subject headings language: " + language);
+        String subjectHeadings;
+        try {
+            subjectHeadings = ResourceUtility.stringOf(String.format(FILENAME_TEMPLATE, language));
 
-        String subjectHeadings = ResourceUtility.stringOf(String.format(FILENAME_TEMPLATE, language));
+        } catch (IOException e) {
+            log(Arrays.toString(e.getStackTrace()));
+            objectMapper.writeValue(output, new GatewayResponse<>(objectMapper.writeValueAsString(
+                    Problem.valueOf(INTERNAL_SERVER_ERROR, e.getMessage())), problemHeaders(),
+                    SC_INTERNAL_SERVER_ERROR));
+            return;
+        }
+
         objectMapper.writeValue(output, new GatewayResponse<>(
                 subjectHeadings, headers(), SC_OK));
-
     }
 
     /**
